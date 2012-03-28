@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "types.h"
 #include "linearimage.h"
 
 template<typename T>
@@ -42,3 +43,4 @@ void LinearImage<T>::set (T *buf, rectangle r)
 
 static LinearImage<unsigned char> a (0, 0);
 static LinearImage<float>         b (0, 0);
+static LinearImage<rgbaf>         c (0, 0);

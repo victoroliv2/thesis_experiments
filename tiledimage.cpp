@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "types.h"
 #include "tiledimage.h"
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
@@ -115,3 +116,4 @@ void TiledImage<T>::set (T *buf, rectangle r)
 
 static TiledImage<unsigned char> a (0, 0, 0, 0);
 static TiledImage<float>         b (0, 0, 0, 0);
+static TiledImage<rgbaf>         c (0, 0, 0, 0);
