@@ -1,5 +1,6 @@
 #include <vector>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "tiledimage.h"
@@ -42,6 +43,8 @@ TiledImage<T>::TiledImage (int w, int h, int tile_width, int tile_height)
           t.data = new T[r.width * r.height];
           t.roi  = r;
 
+          memset (t.data, 0, r.width * r.height * sizeof(T));
+
           this->tiles->push_back(t);
         }
   }
@@ -64,20 +67,23 @@ void TiledImage<T>::get (T *buf, rectangle r)
   {
     typename std::vector< Tile<T> >::iterator it;
 
+    memset (buf, 0, r.width * r.height * sizeof(T));
+
     for (it=this->tiles->begin() ; it < this->tiles->end(); it++)
       {
         rectangle ri;
         if (rectangle_intersect (it->roi, r, ri))
           {
-            T *buf_tmp = buf + ri.y * it->roi.width + ri.x;
+            T *buf_tmp = buf + ri.y * r.width + ri.x;
 
             rectangle tmp = {ri.x - it->roi.x, ri.y - it->roi.y, ri.width, ri.height};
             size_t offset = (tmp.y * it->roi.width + tmp.x);
+
             for (int y = tmp.y; y < tmp.y + tmp.height; y++)
               {
-                memcpy (it->data + offset, buf_tmp, tmp.width * sizeof(T));
+                memcpy (buf_tmp, it->data + offset, tmp.width * sizeof(T));
                 buf_tmp += r.width;
-                offset  += it->roi.width;
+                offset  += tmp.width;
               }
           }
       }
@@ -93,18 +99,19 @@ void TiledImage<T>::set (T *buf, rectangle r)
         rectangle ri;
         if (rectangle_intersect (it->roi, r, ri))
           {
-            T *buf_tmp = buf + ri.y * it->roi.width + ri.x;
+            T *buf_tmp = buf + ri.y * r.width + ri.x;
 
             rectangle tmp = {ri.x - it->roi.x, ri.y - it->roi.y, ri.width, ri.height};
-            size_t offset = (tmp.y * it->roi.width + tmp.x);;
+            size_t offset = (tmp.y * it->roi.width + tmp.x);
             for (int y = tmp.y; y < tmp.y + tmp.height; y++)
               {
-                memcpy (buf_tmp, it->data + offset, tmp.width * sizeof(T));
+                memcpy (it->data + offset, buf_tmp, tmp.width * sizeof(T));
                 buf_tmp += r.width;
-                offset  += it->roi.width;
+                offset  += tmp.width;
               }
           }
       }
   }
 
-TiledImage<float> a (0, 0, 0, 0);
+static TiledImage<unsigned char> a (0, 0, 0, 0);
+static TiledImage<float>         b (0, 0, 0, 0);

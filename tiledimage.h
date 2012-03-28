@@ -1,3 +1,6 @@
+#ifndef TILEDIMAGE_H
+#define TILEDIMAGE_H
+
 #include <vector>
 
 #include "image.h"
@@ -24,3 +27,5 @@ class TiledImage : public Image<T>
     void get (T *buf, rectangle r);
     void set (T *buf, rectangle r);
 };
+
+#endif

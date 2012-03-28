@@ -1,3 +1,6 @@
+#ifndef IMAGE_H
+#define IMAGE_H
+
 struct rectangle
 {
   int x, y, width, height;
@@ -10,7 +13,9 @@ class Image
     int width, height;
 
     Image (int width, int height) : width(width), height(height) {}
-    virtual ~Image();
+    virtual ~Image() {};
     virtual void get (T *buf, rectangle r) = 0;
     virtual void set (T *buf, rectangle r) = 0;
 };
+
+#endif

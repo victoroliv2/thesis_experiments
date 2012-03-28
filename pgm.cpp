@@ -14,7 +14,7 @@ unsigned char *load_pgm(const char filename[], int *_w, int *_h)
   sscanf(line, "%d %d", &w, &h);
   fgets(line, sizeof(line), f);
   printf("%d %d\n", w, h);
-  unsigned char* img = (unsigned char*)malloc(sizeof(unsigned char)*w*h);
+  unsigned char* img = new unsigned char [w*h];
   for (i=0; i<w*h; i++)
     {
         fgets(line, sizeof(line), f);
