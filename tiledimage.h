@@ -17,10 +17,10 @@ class Tile
 template<typename T>
 class TiledImage : public Image<T>
 {
-  std::vector< Tile<T> > *tiles;
-  int tile_width, tile_height;
-
   public:
+    std::vector< Tile<T> > *tiles;
+    int tile_width, tile_height;
+
     TiledImage (int w, int h, int tile_width, int tile_height);
     ~TiledImage ();
 

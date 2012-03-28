@@ -6,9 +6,9 @@
 template<typename T>
 class LinearImage : public Image<T>
 {
-  T *data;
-
   public:
+    T *data;
+
     LinearImage (int w, int h);
     ~LinearImage ();
 
