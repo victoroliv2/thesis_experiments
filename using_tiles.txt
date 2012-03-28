@@ -1,0 +1,12 @@
+<victorm> pippin, I'll have to write an academic report about the work I've been doing with GEGL and OpenCL... so I'll have to talk a little about the advantages of using tiled images in image manipulation.
+<victorm> So, I have:
+<victorm> - almost no overhead in point ops
+<victorm> - better CPU cache use for area ops (neighbor pixels are near in memory)
+<victorm> - more interactive (just update tiles that are changed by the user)
+<victorm> - it's possible to use the disk to keep unused tiles
+<victorm> Anything else you may add?
+<pippin> copy on write
+<pippin> it is possible to cheaply duplicate a buffer, and mofify a few tiles in the new one sharing almost all image data between them
+<pippin> mipmapping becomes simpler (related to being able to swap things out)
+<pippin> one can also implement undo/redo directly using tiles for a buffer
+<pippin> one reduces memory fragmentation since allocations are easier to reuse
